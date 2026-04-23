@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculateur Universel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .app {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      width: 350px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      font-size: 22px;
+    }
+
+    .signature {
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2a5298;
+      letter-spacing: 1px;
+    }
+
+    .signature span {
+      color: #1e3c72;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #2a5298;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #1e3c72;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-size: 16px;
+      background: #f1f3f6;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .switch {
+      margin-top: 10px;
+      cursor: pointer;
+      color: #2a5298;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <h1>🌾 Calculateur Universel</h1>
+  <div class="signature">✨ Créé par <span>Routier87</span> ✨</div>
+
+  <select id="produit">
+    <option>Carburant</option>
+    <option>Blé</option>
+    <option>Orge</option>
+    <option>Colza</option>
+    <option>Tournesol</option>
+    <option>Maïs</option>
+    <option>Maïs ensilage</option>
+    <option>Pommes de terre</option>
+    <option>Betteraves</option>
+    <option>Carottes</option>
+    <option>Autre</option>
+  </select>
+
+  <input type="text" id="customProduit" placeholder="Produit personnalisé">
+
+  <input type="number" id="prix" placeholder="Prix par unité (€)">
+  <input type="number" id="valeur" placeholder="Budget (€) ou Quantité">
+
+  <button onclick="calculer()">Calculer</button>
+
+  <div class="switch" onclick="switchMode()">🔁 Mode : Budget → Quantité</div>
+
+  <div class="result" id="resultat"></div>
+</div>
+
+<script>
+let mode = "budget";
+
+function switchMode() {
+  mode = mode === "budget" ? "quantite" : "budget";
+  document.querySelector('.switch').innerText = 
+    mode === "budget" ? "🔁 Mode : Budget → Quantité" : "🔁 Mode : Quantité → Prix";
+}
+
+function calculer() {
+  let produit = document.getElementById("produit").value;
+  let custom = document.getElementById("customProduit").value;
+  let prix = parseFloat(document.getElementById("prix").value);
+  let valeur = parseFloat(document.getElementById("valeur").value);
+
+  if (produit === "Autre" && custom !== "") {
+    produit = custom;
+  }
+
+  if (!prix || !valeur) {
+    document.getElementById("resultat").innerHTML = "⚠️ Remplis les champs";
+    return;
+  }
+
+  let resultat = "";
+
+  if (mode === "budget") {
+    let quantite = valeur / prix;
+    resultat = `👉 ${produit}<br>Quantité : ${quantite.toFixed(2)}`;
+  } else {
+    let total = valeur * prix;
+    resultat = `👉 ${produit}<br>Total : ${total.toFixed(2)} €`;
+  }
+
+  document.getElementById("resultat").innerHTML = resultat;
+}
+</script>
+
+</body>
+</html>
