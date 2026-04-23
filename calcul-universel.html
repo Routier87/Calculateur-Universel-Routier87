@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculateur Universel</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #eef2f3;
+      text-align: center;
+      padding: 30px;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 350px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    input, select {
+      width: 95%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>🌾 Calculateur Universel</h2>
+
+  <select id="produit">
+    <option>Carburant</option>
+    <option>Blé</option>
+    <option>Orge</option>
+    <option>Colza</option>
+    <option>Tournesol</option>
+    <option>Maïs</option>
+    <option>Maïs ensilage</option>
+    <option>Pommes de terre</option>
+    <option>Betteraves</option>
+    <option>Carottes</option>
+    <option>Autre</option>
+  </select>
+
+  <input type="text" id="customProduit" placeholder="Nom personnalisé (si Autre)">
+  <input type="number" id="prix" placeholder="Prix par unité (€)">
+  <input type="number" id="montant" placeholder="Budget (€)">
+
+  <button onclick="calculer()">Calculer</button>
+
+  <div class="result" id="resultat"></div>
+</div>
+
+<script>
+function calculer() {
+  let produit = document.getElementById("produit").value;
+  let custom = document.getElementById("customProduit").value;
+  let prix = parseFloat(document.getElementById("prix").value);
+  let montant = parseFloat(document.getElementById("montant").value);
+
+  if (produit === "Autre" && custom !== "") {
+    produit = custom;
+  }
+
+  if (!prix || !montant) {
+    document.getElementById("resultat").innerHTML = "⚠️ Remplis les champs";
+    return;
+  }
+
+  let quantite = montant / prix;
+
+  document.getElementById("resultat").innerHTML =
+    "👉 Produit : " + produit + "<br>" +
+    "👉 Quantité : " + quantite.toFixed(2);
+}
+</script>
+
+</body>
+</html>
